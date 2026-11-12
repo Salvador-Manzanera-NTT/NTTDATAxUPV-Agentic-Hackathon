@@ -1,0 +1,121 @@
+<!-- title: Evaluación -->
+<!-- kicker: Criterios del jurado -->
+<!-- lead: Se premia el sistema de agentes (cómo construís) por encima de la aplicación (qué construís). Ocho criterios, puntuados de 1 a 5, con pesos y descriptores públicos. -->
+<!-- chips: <span class="chip line">60 % sistema de agentes</span><span class="chip line">15 % producto</span><span class="chip line">10 % equipo</span><span class="chip line">15 % pitch</span> -->
+
+<h2>De un vistazo</h2>
+<div class="stack" role="img" aria-label="Reparto de la nota: 60% sistema de agentes, 15% producto, 10% equipo, 15% pitch"><div class="s1">60&nbsp;%</div><div class="s2">15</div><div class="s3">10</div><div class="s4">15</div></div>
+<div class="stack-labels"><div class="l1"><b>Sistema de agentes</b>A–E</div><div class="l2"><b>Producto</b>F</div><div class="l3"><b>Equipo</b>G</div><div class="l4"><b>Pitch</b>H</div></div>
+
+<div class="tablewrap"><table>
+<thead><tr><th>Bloque</th><th>Criterio</th><th class="num">Peso</th></tr></thead>
+<tbody>
+<tr><td rowspan="5"><strong>Sistema de agentes · 60&nbsp;%</strong></td><td><a href="#crit-a">A · Diseño del sistema de agentes</a></td><td class="num">20&nbsp;%</td></tr>
+<tr><td><a href="#crit-b">B · Spec-Driven Development real</a></td><td class="num">15&nbsp;%</td></tr>
+<tr><td><a href="#crit-c">C · Guardarraíles, control humano y calidad</a></td><td class="num">10&nbsp;%</td></tr>
+<tr><td><a href="#crit-d">D · Adaptabilidad al cambio (CR1, CR2)</a></td><td class="num">10&nbsp;%</td></tr>
+<tr><td><a href="#crit-e">E · Eficiencia y coste</a></td><td class="num">5&nbsp;%</td></tr>
+<tr><td><strong>Producto · 15&nbsp;%</strong></td><td><a href="#crit-f">F · Funcionalidad entregada</a></td><td class="num">15&nbsp;%</td></tr>
+<tr><td><strong>Equipo · 10&nbsp;%</strong></td><td><a href="#crit-g">G · Trabajo en equipo</a></td><td class="num">10&nbsp;%</td></tr>
+<tr><td><strong>Pitch · 15&nbsp;%</strong></td><td><a href="#crit-h">H · Pitch, demo y respuestas</a></td><td class="num">15&nbsp;%</td></tr>
+</tbody></table></div>
+
+<div class="note"><svg class="icon"><use href="#i-chart"/></svg><div>
+<p><strong>Nota final</strong> = Σ (puntuación de 1 a 5 × peso), con un máximo de <strong>5,00</strong>.</p>
+<p>Los criterios <strong>A–G</strong> los puntúan los coaches técnicos y el jurado con un <strong>informe de auditoría de vuestro repo</strong> (se hace al congelar el código). El criterio <strong>H</strong> lo puntúa <strong>solo el jurado</strong>, en directo durante el pitch.</p></div></div>
+
+<h2>Descriptores por criterio</h2>
+<p>Cada criterio se describe en tres niveles: <strong>1</strong>, <strong>3</strong> y <strong>5</strong>. El 2 y el 4 son intermedios. Desplegad cada uno para ver qué distingue un 3 de un 5.</p>
+
+<details class="crit" id="crit-a" open><summary><span class="l">A</span><span class="t">Diseño del sistema de agentes</span><span class="w">20&nbsp;%</span></summary><div class="inner">
+<div class="levels">
+<div class="lv l1"><b>1</b>Un único chat o agentes genéricos sin rol claro. Ni contratos ni orquestación.</div>
+<div class="lv l3"><b>3</b>Roles definidos por fase y algo de orquestación. Contratos implícitos. Modelos elegidos sin criterio explícito.</div>
+<div class="lv l5"><b>5</b>Roles proporcionados (ni de más ni de menos) y contratos de entrada y salida explícitos. Orquestación clara (quién lanza a quién y con qué contexto), memoria compartida útil y elección de modelo justificada por agente. El diseño explica qué <strong>no</strong> se automatiza.</div>
+</div>
+<p class="guide">¿Podría otro equipo reutilizarlo con otra épica? ¿Los agentes se pasan rutas o contenido? ¿Hay agentes que no aportan nada?</p>
+</div></details>
+
+<details class="crit" id="crit-b"><summary><span class="l">B</span><span class="t">Spec-Driven Development real</span><span class="w">15&nbsp;%</span></summary><div class="inner">
+<div class="levels">
+<div class="lv l1"><b>1</b>OpenSpec instalado pero vacío o decorativo; el código va por libre.</div>
+<div class="lv l3"><b>3</b>Hay <em>changes</em> y specs para parte del trabajo. Trazabilidad parcial.</div>
+<div class="lv l5"><b>5</b>Las specs son la fuente de verdad: <em>changes</em> propuestos, aplicados y <strong>archivados</strong>. Trazabilidad demostrable épica → historia → criterio de aceptación → spec → test → commit. Cuando el código se desvió, corrigieron la spec primero.</div>
+</div></div></details>
+
+<details class="crit" id="crit-c"><summary><span class="l">C</span><span class="t">Guardarraíles, control humano y calidad</span><span class="w">10&nbsp;%</span></summary><div class="inner">
+<div class="levels">
+<div class="lv l1"><b>1</b>Sin puertas humanas ni tests significativos. Los agentes se autoaprueban.</div>
+<div class="lv l3"><b>3</b>Algunas puertas humanas y tests, pero solo procedimentales («el agente debería…»).</div>
+<div class="lv l5"><b>5</b>Puertas humanas en los puntos clave, aplicadas <strong>técnicamente</strong> (hooks, permisos por agente, <code>tools:</code> acotadas). Revisor independiente, un test por criterio de aceptación, revisión de seguridad con evidencia y topes de iteración. Bonus si han aplicado seguridad al propio sistema de agentes.</div>
+</div></div></details>
+
+<details class="crit" id="crit-d"><summary><span class="l">D</span><span class="t">Adaptabilidad al cambio (CR1, CR2)</span><span class="w">10&nbsp;%</span></summary><div class="inner">
+<div class="levels">
+<div class="lv l1"><b>1</b>CR1 y CR2 ignorados o metidos a mano en el código.</div>
+<div class="lv l3"><b>3</b>Al menos uno se absorbe por el flujo normal, con retrabajo manual notable.</div>
+<div class="lv l5"><b>5</b>Ambos entran por el sistema: el analista genera o modifica historias, nuevo <em>change</em> OpenSpec sobre las specs existentes, tests actualizados y replanificación visible. Saben decir qué se rompió y cuánto costó. Ningún agente tuvo que rediseñarse.</div>
+</div></div></details>
+
+<details class="crit" id="crit-e"><summary><span class="l">E</span><span class="t">Eficiencia y coste</span><span class="w">5&nbsp;%</span></summary><div class="inner">
+<div class="levels">
+<div class="lv l1"><b>1</b>Sin datos de coste. Opus o subagentes en bucle «por si acaso». Presupuesto agotado antes del día 3.</div>
+<div class="lv l3"><b>3</b>Coste reportado. Política de modelos razonable pero no medida.</div>
+<div class="lv l5"><b>5</b>Coste por persona y por fase medido. Modelo adecuado a cada tarea (Haiku en lo mecánico), contexto acotado y una reflexión de qué fue caro y cómo lo corrigieron.</div>
+</div></div></details>
+
+<details class="crit" id="crit-f"><summary><span class="l">F</span><span class="t">Funcionalidad entregada</span><span class="w">15&nbsp;%</span></summary><div class="inner">
+<div class="levels">
+<div class="lv l1"><b>1</b>No arranca o solo funciona E1 parcialmente. Nada en <code>main</code>.</div>
+<div class="lv l3"><b>3</b>E1 y E2 funcionando y con tests en <code>main</code>. Algo de E3, E4 o los CR.</div>
+<div class="lv l5"><b>5</b>E1–E4 y al menos un CR funcionando en <code>main</code>, con el CI en verde y las reglas de negocio cubiertas por tests (códigos de error del contrato). Se reproduce en 2 minutos con <code>npm install &amp;&amp; npm run dev</code>.</div>
+</div>
+<p class="guide">Los coaches comprueban <strong>2–3 reglas concretas en vivo</strong> durante la auditoría.</p>
+</div></details>
+
+<details class="crit" id="crit-g"><summary><span class="l">G</span><span class="t">Trabajo en equipo</span><span class="w">10&nbsp;%</span></summary><div class="inner">
+<div class="levels">
+<div class="lv l1"><b>1</b>Una o dos personas hacen todo.</div>
+<div class="lv l3"><b>3</b>Todos aparecen en el <code>git log</code>, con un reparto desigual.</div>
+<div class="lv l5"><b>5</b>Todos han diseñado al menos un agente o skill y tienen commits relevantes. El reparto es explícito y responden todos en el turno de preguntas.</div>
+</div></div></details>
+
+<details class="crit" id="crit-h"><summary><span class="l">H</span><span class="t">Pitch, demo y respuestas</span><span class="w">15&nbsp;%</span></summary><div class="inner">
+<div class="levels">
+<div class="lv l1"><b>1</b>Sin estructura. Demo fallida o inexistente. No responden.</div>
+<div class="lv l3"><b>3</b>Estructura correcta y demo parcial (o vídeo). Respuestas genéricas.</div>
+<div class="lv l5"><b>5</b>Hook potente, problema y solución claros, y una <strong>demo del sistema de agentes trabajando</strong> (no solo de la app). Cifras coherentes con el repo, cierre memorable y respuestas con evidencia.</div>
+</div></div></details>
+
+<h2>Lo que el jurado mirará en vuestro repo</h2>
+<p>Los coaches revisan el repo <strong>antes del pitch</strong>, al congelar el código. Lo que no esté en <code>main</code>, no existe. Rellenad <code>docs/evidencias/</code>:</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Fichero</th><th>Contenido</th><th>Criterios</th></tr></thead>
+<tbody>
+<tr><td><code>sistema-agentes.md</code></td><td>Mapa de agentes (diagrama): qué hace cada uno, su modelo, entradas, salidas y puertas humanas.</td><td>A, C</td></tr>
+<tr><td><code>trazabilidad.md</code></td><td>Al menos un ejemplo completo: épica → historia → criterio de aceptación → spec → test → commit.</td><td>B</td></tr>
+<tr><td><code>cambios-requisitos.md</code></td><td>Cómo entraron CR1 y CR2: qué agente, qué <em>changes</em>, qué se rehízo y cuánto costó.</td><td>D</td></tr>
+<tr><td><code>coste.md</code></td><td>Coste por persona (<code>budget.js report</code>) y reflexión sobre qué fue caro y por qué.</td><td>E</td></tr>
+<tr><td><code>lecciones.md</code></td><td>Qué cambiaríais.</td><td>A, D</td></tr>
+</tbody></table></div>
+<div class="note warn"><svg class="icon"><use href="#i-alert"/></svg><div><p><strong>Las cifras del pitch tienen que coincidir con las del repo.</strong> Es la lección más repetida de la edición anterior.</p></div></div>
+
+<h2>Cinco consejos para puntuar alto</h2>
+<ol class="steps">
+  <li><strong>Diseñad antes de construir.</strong><p>El taller del día 1 existe por una razón: un sistema pensado en papel puntúa más en A que uno improvisado.</p></li>
+  <li><strong>Cerrad el ciclo de una épica.</strong><p>De requisitos a entrega, con puertas humanas. Mejor 4–6 agentes que lo cierran que 14 que no llegan a QA.</p></li>
+  <li><strong>Aplicad las reglas técnicamente.</strong><p>«El agente no debería editar código» vale menos que un agente sin la herramienta <code>Edit</code>.</p></li>
+  <li><strong>Medid el coste desde el día 1.</strong><p>Mirad la statusline y guardad el informe por persona. No se puede reflexionar sobre un coste que no se ha medido.</p></li>
+  <li><strong>Enseñad el sistema trabajando en el pitch.</strong><p>El jurado ya sabe que la app existe: quiere ver al sistema de agentes ejecutando una historia.</p></li>
+</ol>
+
+<h2>Desempates y premios</h2>
+<ol>
+  <li><strong>Desempate:</strong> gana la puntuación del bloque <em>Sistema de agentes</em> (A–E). Si persiste, decide el criterio D.</li>
+</ol>
+<div class="cards">
+  <div class="card"><svg class="icon"><use href="#i-trophy"/></svg><h3>Ganador del hackathon</h3><p>La mejor nota final.</p></div>
+  <div class="card"><svg class="icon"><use href="#i-agent"/></svg><h3>Mejor sistema de agentes</h3><p>La mejor nota en A + C. Si coincide con el ganador, pasa al siguiente.</p></div>
+  <div class="card"><svg class="icon"><use href="#i-coin"/></svg><h3>Ingeniería eficiente</h3><p>El mejor criterio E con una F ≥ 3. Premia hacer más con menos crédito.</p></div>
+</div>
+<div class="pending"><svg class="icon"><use href="#i-clock"/></svg><div><h3>Por confirmar</h3><p>Los premios concretos y la composición del jurado (NTT DATA, UPV y una persona experta invitada) se confirmarán antes del evento. Esta sección se actualizará.</p></div></div>

@@ -1,0 +1,108 @@
+<!-- title: Cómo funciona -->
+<!-- kicker: El reto -->
+<!-- lead: Qué vamos a hacer, qué se espera de vuestro equipo y qué os llevaréis al terminar. -->
+
+<h2>La idea del hackathon</h2>
+<p>Cada equipo recibe el mismo reto: una aplicación con requisitos de negocio (<a href="app.html">BiciCampus</a>; los requisitos se publican el día 1). Pero <strong>no la programáis a mano</strong>. Vuestro trabajo es <strong>diseñar y construir un sistema de agentes con Claude Code que la construya</strong>, guiado por especificaciones (Spec-Driven Development con OpenSpec).</p>
+<div class="cards c2">
+  <div class="card ok"><svg class="icon"><use href="#i-check"/></svg><h3>Lo que se evalúa</h3><p>Cómo construís: el diseño de vuestro sistema de agentes, las specs, los guardarraíles, la adaptación al cambio y el coste.</p></div>
+  <div class="card warn"><svg class="icon"><use href="#i-target"/></svg><h3>Lo que importa menos</h3><p>Cuánta aplicación tenéis. El producto pesa un 15&nbsp;% y <strong>no puede contener IA</strong>: la IA es vuestra herramienta, no una funcionalidad.</p></div>
+</div>
+
+<h2>Objetivos de aprendizaje</h2>
+<div class="cards">
+  <div class="card"><svg class="icon"><use href="#i-compass"/></svg><h3>Spec-Driven Development</h3><p>La especificación manda y la IA implementa. Aprenderéis a proponer, aplicar y archivar cambios con OpenSpec y a mantener la trazabilidad de la épica al test.</p></div>
+  <div class="card"><svg class="icon"><use href="#i-agent"/></svg><h3>Vuestro sistema de agentes</h3><p>Diseñar agentes con roles, contratos de entrada y salida, memoria y puertas humanas, y descubrir cuándo un sistema de agentes merece la pena.</p></div>
+  <div class="card"><svg class="icon"><use href="#i-terminal"/></svg><h3>Claude Code a fondo</h3><p>Subagentes, skills, comandos, hooks, permisos y gestión del contexto, con crédito de API para practicar de verdad.</p></div>
+</div>
+
+<h2>El ciclo que vuestro sistema debe automatizar</h2>
+<p>Hay cinco fases. Vuestro sistema tiene que <strong>agentizar las cinco</strong>; podéis añadir más, pero cerrar el ciclo completo de al menos una épica vale más que muchas fases a medias.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>#</th><th>Fase</th><th>Entra</th><th>Sale (mínimo esperado)</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Requisitos</td><td>Épicas (wiki del evento)</td><td>Historias de usuario como issues, con criterios de aceptación en Gherkin y enlazadas a su épica</td></tr>
+<tr><td>2</td><td>Planificación</td><td>Historias</td><td>Prioridad, estimación, dependencias y reparto</td></tr>
+<tr><td>3</td><td>Implementación</td><td>Historia + spec OpenSpec</td><td>Un <em>change</em> OpenSpec por historia o grupo de historias, y el código</td></tr>
+<tr><td>4</td><td>Calidad y seguridad</td><td>Código + spec + criterios</td><td>Tests que trazan a los criterios, <code>npm test</code> en verde e informe de seguridad</td></tr>
+<tr><td>5</td><td>Entrega</td><td>Todo lo anterior</td><td>Documentación, notas de versión y <code>docs/evidencias/</code></td></tr>
+</tbody></table></div>
+<p>Entre fases hay <strong>puertas humanas</strong>: puntos donde una persona del equipo aprueba antes de seguir (historias, spec, veredicto de QA). Un agente <strong>nunca se aprueba a sí mismo</strong>.</p>
+
+<h2>Qué se espera de vuestro equipo</h2>
+<div class="cards">
+  <div class="card"><svg class="icon"><use href="#i-agent"/></svg><h3>Un sistema de agentes</h3><p>En <code>.claude/</code>: agentes, skills y comandos propios, más un <code>CLAUDE.md</code>. <strong>Cada persona</strong> diseña al menos una pieza.</p></div>
+  <div class="card"><svg class="icon"><use href="#i-doc"/></svg><h3>Specs vivas</h3><p>En <code>openspec/</code>. Si el código se desvía, se corrige primero la spec. Los <em>changes</em> terminan <strong>archivados</strong>.</p></div>
+  <div class="card"><svg class="icon"><use href="#i-branch"/></svg><h3>Una app en <code>main</code></h3><p>Funcionando, con tests y CI en verde. Se reproduce con <code>npm install &amp;&amp; npm run dev</code>.</p></div>
+  <div class="card"><svg class="icon"><use href="#i-list"/></svg><h3>Evidencias</h3><p>En <code>docs/evidencias/</code>: arquitectura, trazabilidad, cambios, coste y lecciones.</p></div>
+  <div class="card"><svg class="icon"><use href="#i-users"/></svg><h3>Trabajo de equipo</h3><p>Todos aparecen en el <code>git log</code> y todos responden en el turno de preguntas.</p></div>
+  <div class="card"><svg class="icon"><use href="#i-mic"/></svg><h3>Un pitch de 5 minutos</h3><p>Con una demo del <strong>sistema de agentes trabajando</strong>, no solo de la app.</p></div>
+</div>
+
+<h2>Tres ideas que lo cambian todo</h2>
+<ol class="steps">
+  <li><strong>El sistema de agentes es lo que se evalúa.</strong><p>La aplicación es la excusa para ponerlo a prueba.</p></li>
+  <li><strong>La spec manda.</strong><p>Si el código y la spec no coinciden, se corrige la spec y luego el código. Cuando lleguen cambios de requisitos, se abre un <em>change</em> nuevo; no se parchea el código.</p></li>
+  <li><strong>Pequeño y completo gana a grande y a medias.</strong><p>En la edición anterior, equipos con 9–14 agentes cerraron una épica de trece. Entre 4 y 6 agentes que cierran el ciclo suelen ser mejor sistema.</p></li>
+</ol>
+
+<h2>Cómo se organiza el trabajo</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Qué</th><th>Cómo</th></tr></thead>
+<tbody>
+<tr><td>Equipos</td><td>8 equipos de 4–5 personas, mezclando perfiles: Turia, Albufera, Micalet, Malvarrosa, Saler, Serranos, Quart y Russafa.</td></tr>
+<tr><td>Repositorio</td><td>Uno por equipo, generado desde el template del hackathon, con la configuración común de seguridad, presupuesto y CI.</td></tr>
+<tr><td>Épicas e historias</td><td>La organización publica las épicas en la <a href="epicas.html">wiki</a> y vuestros agentes las descargan. Vuestro sistema escribe las historias como <em>Issues</em> de vuestro repo.</td></tr>
+<tr><td>Coaches</td><td>Un coach técnico por cada dos equipos, más una persona de innovación y pitch.</td></tr>
+<tr><td>Material físico</td><td>Pizarra, pegatinas de arquitectura, canvas de agente impresos y agenda en cada mesa.</td></tr>
+<tr><td>Feedback</td><td>Revisión de stakeholders el día 2 (no puntúa) y pitch final el día 3 (decide el ganador).</td></tr>
+</tbody></table></div>
+
+<h2>Presupuesto y modelos</h2>
+<p>Cada persona tiene <strong>~50&nbsp;$</strong> de crédito de API (≈ 200–250&nbsp;$ por equipo), que se reclama el día 1 (<a href="#credito-api">cómo hacerlo</a>). Cuando se acaba, se acaba. La <strong>statusline</strong> de Claude Code muestra el gasto: 🟢 por debajo del 70&nbsp;%, 🟠 entre el 70 y el 90&nbsp;% y 🔴 a partir del 90&nbsp;%.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Modelo</th><th>Úsalo para</th></tr></thead>
+<tbody>
+<tr><td><code>haiku</code></td><td>Tareas mecánicas: clasificar, formatear, mover datos a issues, resúmenes, lint de specs.</td></tr>
+<tr><td><code>sonnet</code> (por defecto)</td><td>Requisitos, specs, código y tests: el caballo de batalla.</td></tr>
+<tr><td><code>opus</code></td><td><strong>Solo</strong> decisiones difíciles (arquitectura del sistema, revisión de seguridad final), y justificado en <code>docs/evidencias/</code>.</td></tr>
+</tbody></table></div>
+<p>Elegir bien el modelo para cada agente <strong>puntúa</strong> en el criterio de eficiencia. Consejos para gastar menos: <code>/clear</code> entre tareas distintas, pasar a los agentes <strong>rutas de fichero</strong> y no copias de contenido, poner tope de 2–3 vueltas a cualquier bucle de corrección y ejecutar los tests solo del fichero afectado.</p>
+
+<h2>Qué os lleváis</h2>
+<ul>
+  <li>Un <strong>método</strong> (SDD) para trabajar con IA sin perder el control de lo que se construye.</li>
+  <li>Un <strong>sistema de agentes propio</strong>, reutilizable en vuestros proyectos, en vuestro repo.</li>
+  <li>Criterio para decidir <strong>qué automatizar, qué no y dónde poner a una persona</strong>.</li>
+  <li>Experiencia real de <strong>coste</strong>: cuánto cuesta una historia y qué lo encarece.</li>
+  <li>Práctica de <strong>trabajo en equipo</strong> con cambios de requisitos y presión de tiempo, y de contar el resultado en un pitch.</li>
+</ul>
+
+<h2 id="antes-del-dia-1">Antes del día 1</h2>
+<p>Haced esto <strong>antes de la sesión online de setup</strong>. Os llegará por correo antes del 23 de noviembre.</p>
+<ol class="steps">
+  <li><strong>Portátil y sistema.</strong><p>macOS, Linux o Windows 10/11. En Windows, instalad también <em>Git for Windows</em>.</p></li>
+  <li><strong>Node.js 22 LTS, Git y GitHub CLI (<code>gh</code>).</strong><p>Comprobad con <code>node -v</code>, <code>git --version</code> y <code>gh --version</code>.</p></li>
+  <li><strong>Cuenta de Claude Console (gratuita).</strong><p>Entrad en <a href="https://platform.claude.com" rel="noopener">platform.claude.com</a>, iniciad sesión o <strong>crear una cuenta</strong> con vuestro correo. Hacedlo <strong>antes del día 1</strong> para que nadie espere al empezar: el crédito se reclama allí (ver <a href="#credito-api">Tu crédito de API</a>).</p></li>
+  <li><strong>Claude Code.</strong><p>Con el instalador nativo (<a href="https://code.claude.com/docs" rel="noopener">code.claude.com/docs</a>). Al lanzar <code>claude</code> por primera vez, iniciad sesión con vuestra <strong>cuenta de Console</strong> (uso con crédito de API), no con una suscripción de Claude.ai.</p></li>
+  <li><strong>OpenSpec CLI.</strong><p><code>npm install -g @fission-ai/openspec@latest</code></p></li>
+  <li><strong>Cuenta de GitHub.</strong><p>La necesitamos en la inscripción para daros acceso al repo de equipo. Ejecutad <code>gh auth login</code>.</p></li>
+  <li><strong>Clonad el repo del equipo y ejecutad <code>/setup</code>.</strong><p>Abrid <code>claude</code> en la raíz del repo y repetid <code>/setup</code> hasta ver <strong>LISTO</strong>. Una sola persona del equipo ejecuta <code>openspec init</code> (eligiendo Claude Code), hace commit y push; el resto, <code>git pull</code>.</p></li>
+  <li><strong>Leed <code>.claude/hints/00-empieza-aqui.md</code>.</strong><p>Son 10 minutos y contienen las reglas del juego.</p></li>
+</ol>
+
+<h2 id="credito-api">Tu crédito de API</h2>
+<p>Anthropic aporta <strong>50&nbsp;$ de crédito de API por participante</strong>. Se reclama <strong>el día 1, al empezar el evento</strong>, con un enlace que os enviaremos por correo ese mismo día. No hay que hacer nada con el crédito antes, salvo tener lista la cuenta de Console.</p>
+<ol class="steps">
+  <li><strong>Antes del día 1: tened la cuenta de Console.</strong><p>Iniciad sesión o crear una cuenta gratuita en <a href="https://platform.claude.com" rel="noopener">platform.claude.com</a>. Usad el correo con el que vais a trabajar en el evento.</p></li>
+  <li><strong>Día 1: abrid el correo con el enlace de crédito.</strong><p>Llega al empezar. Iniciad sesión en <code>platform.claude.com</code> y reclamad el crédito desde el enlace.</p></li>
+  <li><strong>Esperad un minuto.</strong><p>El crédito aparece en vuestra cuenta en aproximadamente un minuto. Después podéis iniciar sesión en Claude Code con esa misma cuenta.</p></li>
+</ol>
+<div class="cards c2">
+  <div class="card warn"><svg class="icon"><use href="#i-coin"/></svg><h3>Es crédito de API, no una suscripción</h3><p>Va a vuestra organización de Console. <strong>No es</strong> Claude.ai Pro ni Max: el chat de claude.ai no lo usa; sí lo usan Claude Code y la API.</p></div>
+  <div class="card warn"><svg class="icon"><use href="#i-clock"/></svg><h3>Caduca a los 90 días</h3><p>Contados desde el día en que lo <strong>reclamáis</strong>. Por eso el enlace se comparte el día 1 y no antes.</p></div>
+</div>
+<div class="note stop"><svg class="icon"><use href="#i-lock"/></svg><div><p><strong>El enlace es solo para participantes.</strong> No está protegido con contraseña y el cupo total es limitado y por orden de llegada: si el enlace sale del evento, el crédito puede acabar en manos de quien no participa. <strong>No lo compartáis ni lo publiquéis.</strong></p></div></div>
+<div class="note"><svg class="icon"><use href="#i-chat"/></svg><div><p><strong>¿Problemas al reclamar?</strong> Avisad a un coach en sala. También podéis escribir a Anthropic: <code>hackathon+ntt-data-upv-agentic-engineering-hackathon-dec-2026@anthropic.com</code></p></div></div>
+
+<div class="note warn"><svg class="icon"><use href="#i-lock"/></svg><div><p>Vuestras credenciales y claves de API son <strong>personales</strong>. No las compartáis, no las pegáis en ningún fichero y no las subáis al repo.</p></div></div>

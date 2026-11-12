@@ -1,0 +1,33 @@
+<!-- title: Épicas -->
+<!-- kicker: Requisitos -->
+<!-- lead: Aquí se publican las épicas de BiciCampus, los cambios de requisitos incluidos. Es la única fuente oficial: vuestros agentes las descargan de esta wiki. -->
+<!-- epicas: 1 -->
+
+<div class="note"><svg class="icon"><use href="#i-doc"/></svg><div><p>No hay tablero ni cuentas que gestionar: <strong>las épicas son páginas de esta wiki</strong>. Cada una tiene una versión para leer y un fichero <code>.md</code> pensado para que lo descargue un agente. <strong>No se editan</strong>: si veis un error, avisad a un coach.</p></div></div>
+
+<h2>Estado de la publicación</h2>
+<p>Las épicas se publican por fases, en el momento indicado en la <a href="agenda.html">agenda</a>. Los cambios de requisitos no existen en esta wiki hasta su hora.</p>
+<!--EPICAS_LISTA-->
+
+<h2>Cómo las descargan los agentes</h2>
+<p>Claude Code puede leer páginas web con su herramienta <code>WebFetch</code>. Vuestro repo ya permite el dominio de esta wiki en <code>.claude/settings.json</code>, así que un agente puede leer una épica así, sin intervención humana. Aprender a dar a un agente <strong>fuentes de requisitos externas</strong> es parte del reto.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Qué</th><th>Dirección (relativa a la raíz de la wiki)</th></tr></thead>
+<tbody>
+<tr><td>Índice de épicas publicadas (JSON)</td><td><code>epicas/index.json</code></td></tr>
+<tr><td>Una épica en markdown</td><td><code>epicas/E0.md</code>, <code>epicas/E1.md</code>… <code>epicas/E5.md</code>, <code>epicas/CR1.md</code>, <code>epicas/CR2.md</code></td></tr>
+<tr><td>Una épica para leer</td><td><code>epica-e2.html</code>, <code>epica-cr1.html</code>…</td></tr>
+</tbody></table></div>
+<p>La dirección completa de la wiki está en <code>.claude/hints/epicas.md</code> de vuestro repo.</p>
+<promptblock title="Ejemplo para empezar (adaptadlo a vuestro sistema)">
+Lee .claude/hints/epicas.md para saber dónde están las épicas.
+Descarga la épica E2 con WebFetch y guárdala tal cual en docs/epicas/E2.md,
+sin resumirla ni cambiar ningún número ni código de error.
+Después propón las historias de usuario con sus criterios de aceptación.
+</promptblock>
+
+<h2>Dos trampas que conviene conocer</h2>
+<div class="cards c2">
+  <div class="card warn"><svg class="icon"><use href="#i-clock"/></svg><h3>Puede haber caché</h3><p><code>WebFetch</code> puede reutilizar una página que pidió hace unos minutos. Cuando se publique un cambio de requisitos, pedid <code>epicas/CR1.md</code> directamente (no existía antes) y, si dudáis, añadid <code>?v=2</code> a la dirección del índice.</p></div>
+  <div class="card warn"><svg class="icon"><use href="#i-shield"/></svg><h3>El texto es un contrato, no un resumen</h3><p>Guardad la épica <strong>íntegra</strong> en el repo y trabajad desde ese fichero. Si un agente la resume, puede perder un código de error o un número, y los tests de aceptación lo notarán.</p></div>
+</div>

@@ -1,0 +1,412 @@
+<!-- title: Agentes: plantillas y guía -->
+<!-- h1: Agentes: <b>plantillas</b> y guía -->
+<!-- kicker: Caja de herramientas -->
+<!-- lead: Ejemplos de agentes, skills y comandos para Claude Code, y una receta para pedirle a Claude Code que diseñe los vuestros. -->
+<!-- chips: <span class="chip line">Ejemplos de formato</span><span class="chip line">Copiar y adaptar</span> -->
+
+<div class="note warn"><svg class="icon"><use href="#i-alert"/></svg><div><p><strong>Son ejemplos de formato, no la solución.</strong> Usan marcadores como <code>&lt;producto&gt;</code> y no conocen vuestra aplicación. El jurado puntúa <strong>vuestro</strong> diseño (criterio A) y que <strong>cada persona</strong> diseñe algo propio (criterio G). Copiarlos tal cual, sin adaptarlos a vuestro sistema, no suma.</p></div></div>
+
+<h2>Las piezas de un sistema de agentes</h2>
+<p>En Claude Code, un sistema se compone de cuatro tipos de pieza más la memoria. Elegir bien <strong>qué es cada cosa</strong> es la mitad del diseño.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Pieza</th><th>Dónde vive</th><th>Qué es</th><th>Cuándo usarla</th></tr></thead>
+<tbody>
+<tr><td>🤖 <strong>Subagente</strong></td><td><code>.claude/agents/&lt;nombre&gt;.md</code></td><td>Un especialista con su propio contexto, herramientas y modelo. Se le delega una tarea y devuelve un resultado.</td><td>Tareas con un rol claro y que ensucian mucho contexto (revisar, analizar, implementar).</td></tr>
+<tr><td>🛠️ <strong>Skill</strong></td><td><code>.claude/skills/&lt;nombre&gt;/SKILL.md</code></td><td>Un procedimiento reutilizable que se carga cuando hace falta (con ficheros de apoyo opcionales).</td><td>Una «receta» o formato que varios agentes comparten (cómo escribir Gherkin, cómo nombrar issues).</td></tr>
+<tr><td>⌨️ <strong>Comando</strong></td><td><code>.claude/commands/&lt;nombre&gt;.md</code></td><td>Un prompt que se lanza con <code>/nombre</code>, con argumentos opcionales.</td><td>Orquestar un flujo: «ejecuta el ciclo para esta épica». Corre en la conversación principal.</td></tr>
+<tr><td>🚦 <strong>Hook y permisos</strong></td><td><code>.claude/settings*.json</code> y <code>tools:</code> del agente</td><td>Reglas que el sistema <strong>hace cumplir</strong>, no que el agente «debería» cumplir.</td><td>Puertas humanas y límites de seguridad.</td></tr>
+<tr><td>🧠 <strong>Memoria</strong></td><td><code>.claude/memory/</code>, <code>docs/decisiones.md</code>, <code>CLAUDE.md</code></td><td>Decisiones, glosario y lecciones, versionadas en git.</td><td>Lo que todos los agentes deben saber y no debe repetirse en cada prompt.</td></tr>
+</tbody></table></div>
+<div class="note"><svg class="icon"><use href="#i-branch"/></svg><div><p><strong>Importante:</strong> un subagente <strong>no puede lanzar a otros subagentes</strong>. Por eso el «orquestador» suele ser un <strong>comando o una skill</strong> que corre en la conversación principal y reparte el trabajo, no un subagente más.</p></div></div>
+
+<h2>Anatomía de un agente</h2>
+<p>Un agente es un fichero Markdown con una cabecera (<em>frontmatter</em>) y un cuerpo que es su instrucción de sistema.</p>
+<div class="cards c2">
+  <div class="card"><h3><code>name</code></h3><p>Identificador en minúsculas con guiones. Es como lo invocáis: «usa el subagente <code>revisor-independiente</code>».</p></div>
+  <div class="card"><h3><code>description</code></h3><p>Cuándo debe delegarse en él. <strong>Es lo más importante</strong>: si es vaga, nadie lo usa. Incluid «úsalo cuando…» y qué <em>no</em> hace.</p></div>
+  <div class="card"><h3><code>tools</code></h3><p>Lista cerrada de herramientas. Quitar <code>Edit</code> y <code>Write</code> a un revisor es un guardarraíl <strong>técnico</strong>.</p></div>
+  <div class="card"><h3><code>model</code></h3><p><code>haiku</code>, <code>sonnet</code> u <code>opus</code>. Elegidlo por tarea y justificadlo: es parte del criterio E.</p></div>
+</div>
+
+<h3>Plantilla en blanco</h3>
+<p>Es el canvas del taller convertido en fichero. Si no sabéis rellenar una sección, el diseño aún no está listo.</p>
+<codeblock file=".claude/agents/<nombre-del-agente>.md">
+---
+name: <nombre-del-agente>
+description: <Qué hace, en una frase>. Úsalo cuando <situación que lo dispara>. No <lo que NO hace>.
+tools: Read, Grep, Glob          # solo lo mínimo imprescindible
+model: sonnet                    # haiku | sonnet | opus, y por qué
+---
+
+Eres <rol> del equipo <nombre>.
+
+## Misión
+<Una frase. Si necesitas "y" más de una vez, son dos agentes.>
+
+## Entradas
+- <Ruta o URL que recibe. Recibe RUTAS, no el contenido pegado.>
+
+## Salidas
+- <Fichero o resultado exacto y dónde lo deja, con su formato.>
+
+## Reglas
+- <Lo que siempre hace.>
+- <Lo que NUNCA hace.>
+
+## Si algo falla o es ambiguo
+- <Qué hace con entradas ambiguas: preguntar, parar, devolver "BLOQUEADO: motivo".>
+- Tope: máximo 2 reintentos. Después, para y explica.
+
+## Hecho cuando
+- <Criterio verificable de que ha terminado bien.>
+</codeblock>
+
+<h2 id="ejemplos">Ejemplos listos para adaptar</h2>
+<p>Cinco piezas que representan los patrones que funcionaron en ediciones anteriores: roles estrechos, contratos explícitos, <strong>puertas humanas aplicadas con permisos</strong> y revisor independiente. Pulsad <em>Copiar</em>, pegad en vuestro repo y cambiad los marcadores por vuestro contexto.</p>
+
+<div class="tabs">
+<div class="tablist" role="tablist" aria-label="Plantillas">
+<button type="button" role="tab" aria-selected="true">Orquestador (comando)</button>
+<button type="button" role="tab" aria-selected="false">Analista de requisitos</button>
+<button type="button" role="tab" aria-selected="false">Implementador</button>
+<button type="button" role="tab" aria-selected="false">Revisor independiente</button>
+<button type="button" role="tab" aria-selected="false">Mecánico (Haiku)</button>
+<button type="button" role="tab" aria-selected="false">Skill</button>
+<button type="button" role="tab" aria-selected="false">Memoria</button>
+</div>
+
+<div class="tabpanel">
+<p><strong>Orquestador.</strong> Un comando que corre en la conversación principal, llama a los especialistas en orden, <strong>pasa rutas</strong> y se detiene en las puertas humanas. Se lanza con <code>/ciclo 12</code>.</p>
+<codeblock file=".claude/commands/ciclo.md">
+---
+description: Ejecuta el ciclo completo (requisitos → entrega) para una épica o un CR
+argument-hint: <id de la épica: E2, CR1…>
+---
+
+Vas a orquestar el ciclo de la épica $ARGUMENTS. No implementes nada tú:
+delega en los subagentes y pásales RUTAS de fichero, nunca el contenido.
+
+1. Descarga la épica con WebFetch (la URL está en `.claude/hints/epicas.md`) y guárdala ÍNTEGRA,
+   sin resumir, en `docs/epicas/$ARGUMENTS.md`.
+2. Usa el subagente `analista-requisitos` con esa ruta. Deja su borrador en
+   `docs/trabajo/historias-$ARGUMENTS.md`.
+3. 🚦 PUERTA HUMANA 1: muestra el borrador y PARA. No sigas hasta que una persona
+   escriba "aprobado". Si pide cambios, vuelve al paso 2 (máximo 2 vueltas).
+4. Usa el subagente `publicador-historias` para crear los issues de las historias aprobadas.
+5. Para cada historia, en este orden:
+   a. Ejecuta el flujo de OpenSpec para crear el change a partir de la historia
+      (propose) y 🚦 PUERTA HUMANA 2: espera aprobación de la spec.
+   b. Usa el subagente `implementador` con la ruta del change.
+   c. Usa el subagente `revisor-independiente` con las rutas de spec, tests y diff.
+   d. Si el veredicto es RECHAZADO, vuelve a (b) con sus hallazgos. Máximo 2 vueltas;
+      después, PARA y pide ayuda a una persona.
+6. Cuando el veredicto sea APROBADO, archiva el change y registra en
+   `.claude/memory/decisiones.md` lo aprendido.
+
+Al terminar, resume en 5 líneas: historias cerradas, vueltas de corrección y qué quedó pendiente.
+</codeblock>
+<p class="muted">¿Por qué no es un subagente? Porque un subagente no puede delegar en otros. Y las puertas humanas viven aquí, en la conversación, donde una persona puede responder.</p>
+</div>
+
+<div class="tabpanel">
+<p><strong>Analista de requisitos.</strong> Convierte una épica en historias. Fijaos en que <strong>no tiene <code>Bash</code></strong>: no puede publicar issues por sí mismo, así que la puerta humana se cumple por construcción.</p>
+<codeblock file=".claude/agents/analista-requisitos.md">
+---
+name: analista-requisitos
+description: Convierte una épica o un cambio de requisitos (CR) en historias de usuario con criterios de aceptación Gherkin. Úsalo cuando haya una épica nueva sin historias o llegue un CR. No escribe código ni publica issues.
+tools: Read, Grep, Glob, Write
+model: sonnet
+---
+
+Eres el analista de requisitos del equipo. Tu trabajo es entender, no inventar.
+
+## Misión
+Descomponer UNA épica en historias pequeñas, verticales y verificables.
+
+## Entradas
+- Ruta de la épica (p. ej. `docs/epicas/E2.md`).
+- Specs existentes en `openspec/specs/` (para no contradecirlas ni duplicarlas).
+- Glosario en `.claude/memory/glosario.md`.
+
+## Salidas
+- Un único fichero `docs/trabajo/historias-<épica>.md` con, por historia:
+  - Título `[US-<n>] <verbo + objeto>`
+  - "Parte de #<épica>"
+  - Criterios de aceptación en Gherkin (Dado / Cuando / Entonces), uno por regla de negocio de la épica
+  - Dependencias y estimación S/M/L
+- Al final, una tabla de trazabilidad: regla de la épica → historia que la cubre.
+
+## Reglas
+- Cada regla de negocio de la épica debe quedar cubierta por al menos un criterio.
+- Usa los códigos de error y nombres del contrato TAL CUAL.
+- Si es un CR: indica qué historias existentes cambian y cuáles son nuevas.
+- NUNCA publiques issues ni toques código: eso pasa después de la aprobación humana.
+
+## Si algo es ambiguo
+- No supongas. Añade una sección "Preguntas abiertas" y marca la historia como BLOQUEADA.
+
+## Hecho cuando
+- La tabla de trazabilidad no tiene reglas sin cubrir.
+</codeblock>
+</div>
+
+<div class="tabpanel">
+<p><strong>Implementador.</strong> Trabaja a partir de un <em>change</em> de OpenSpec. Si la spec está mal, <strong>para y avisa</strong>: no la reescribe a escondidas.</p>
+<codeblock file=".claude/agents/implementador.md">
+---
+name: implementador
+description: Implementa el código y los tests de UN change de OpenSpec ya aprobado. Úsalo cuando exista `openspec/changes/<id>/` con tasks. No modifica specs ni hace push.
+tools: Read, Grep, Glob, Edit, Write, Bash
+model: sonnet
+---
+
+Eres el implementador del equipo. La spec manda; tú la cumples.
+
+## Entradas
+- Ruta del change: `openspec/changes/<id>/` (proposal, specs, design y tasks).
+- Convenciones del stack en `.claude/hints/stack-y-estandares.md`.
+
+## Salidas
+- Código y tests en `apps/` y `packages/`, en una rama `us-<n>-<slug>`.
+- Una línea por tarea completada en `openspec/changes/<id>/tasks.md` (marcada [x]).
+- `docs/trabajo/impl-<id>.md`: qué se tocó, qué tests se añadieron y cualquier desviación.
+
+## Reglas
+- Un test por criterio de aceptación, con el nombre del criterio en la descripción.
+- Ejecuta solo los tests afectados (`npx vitest run <fichero>`), no toda la suite.
+- NUNCA edites `openspec/specs/`. Si la spec es incorrecta o incompleta, PARA y
+  devuelve "SPEC-DESVIADA: <qué y por qué>" para que una persona decida.
+- NUNCA hagas push ni fusiones. Commits pequeños con el nº de historia.
+
+## Si los tests fallan
+- Máximo 3 intentos de corrección. Después, para y reporta el fallo con el log relevante.
+
+## Hecho cuando
+- Todas las tasks marcadas, `npm test` en verde y `impl-<id>.md` escrito.
+</codeblock>
+</div>
+
+<div class="tabpanel">
+<p><strong>Revisor independiente.</strong> Quien escribe el código no lo valida. Este agente <strong>no tiene <code>Edit</code> ni <code>Write</code></strong>: solo puede mirar y ejecutar, y devuelve un veredicto.</p>
+<codeblock file=".claude/agents/revisor-independiente.md">
+---
+name: revisor-independiente
+description: Revisa de forma independiente si el código de un change cumple su spec y sus criterios de aceptación, y emite un veredicto APROBADO o RECHAZADO. Úsalo después de implementar. Solo lee y ejecuta tests; no corrige nada.
+tools: Read, Grep, Glob, Bash
+model: sonnet
+---
+
+Eres el revisor. Desconfía por defecto: tu trabajo es encontrar lo que no encaja.
+No conoces el razonamiento del implementador y no debes pedirlo.
+
+## Entradas (solo rutas)
+- Spec y criterios: `openspec/changes/<id>/`
+- Resumen de lo hecho: `docs/trabajo/impl-<id>.md`
+- Diff: usa `git diff main...HEAD`
+
+## Qué comprobar
+1. Cada criterio de aceptación tiene un test que realmente lo ejercita (no solo existe).
+2. El comportamiento coincide con la spec, incluidos los códigos de error del contrato.
+3. Seguridad básica: validación de entradas, sin secretos en el diff, sin dependencias nuevas sin motivo.
+4. Alcance: no hay cambios que la historia no pidió.
+5. Ejecuta los tests afectados y registra el resultado.
+
+## Salida (formato fijo, en tu respuesta)
+VEREDICTO: APROBADO | RECHAZADO
+CRITERIOS: <criterio → test → ok/falla>, uno por línea
+HALLAZGOS: <numerados, con fichero:línea y severidad alta/media/baja>
+EVIDENCIA: <comando ejecutado y resultado>
+
+## Reglas
+- RECHAZADO si cualquier criterio sin test o cualquier hallazgo de severidad alta.
+- No propongas parches: describe el problema. Corregir es trabajo del implementador.
+</codeblock>
+</div>
+
+<div class="tabpanel">
+<p><strong>Agente mecánico en Haiku.</strong> Una tarea repetitiva y sin juicio no necesita un modelo caro. Es la puerta humana hecha técnica: <strong>solo publica lo que ya está aprobado</strong>.</p>
+<codeblock file=".claude/agents/publicador-historias.md">
+---
+name: publicador-historias
+description: Publica como issues de GitHub las historias de un borrador YA APROBADO por una persona. Tarea mecánica. No interpreta ni modifica el contenido.
+tools: Read, Bash
+model: haiku
+---
+
+Eres el publicador de historias. No decides nada: ejecutas.
+
+## Entradas
+- Ruta de un borrador aprobado: `docs/trabajo/historias-<épica>.md`.
+  Debe empezar con la línea `ESTADO: APROBADO`. Si no, devuelve "NO APROBADO" y para.
+
+## Qué haces
+Por cada historia del borrador, crea un issue con `gh issue create`:
+- título `[US-<n>] <verbo + objeto>`
+- cuerpo con "Parte de #<épica>" y los criterios Gherkin tal cual
+- labels `historia`, `estimacion:<S|M|L>` y `estado:listo`
+
+## Salida
+- `docs/trabajo/publicadas-<épica>.md` con la tabla `US-<n> → #<issue>`.
+
+## Reglas
+- No edites el texto de las historias. No cierres ni borres issues.
+- Si un `gh` falla, para y reporta el error sin reintentar más de una vez.
+</codeblock>
+</div>
+
+<div class="tabpanel">
+<p><strong>Skill.</strong> Una receta que varios agentes comparten, para no repetirla en cada prompt. Se carga cuando la descripción encaja con la tarea.</p>
+<codeblock file=".claude/skills/redactar-gherkin/SKILL.md">
+---
+name: redactar-gherkin
+description: Cómo escribir criterios de aceptación en Gherkin para las historias del equipo. Úsalo al redactar o revisar historias de usuario.
+---
+
+# Criterios de aceptación en Gherkin
+
+## Formato
+Un escenario por regla de negocio, en castellano:
+
+    Escenario: <nombre corto que describe la regla>
+      Dado <estado inicial concreto>
+      Cuando <una sola acción del usuario>
+      Entonces <resultado observable>
+      Y <código de error o mensaje del contrato, si aplica>
+
+## Reglas del equipo
+- Un "Cuando" por escenario. Si hay dos, son dos escenarios.
+- Datos concretos (usuario u1, patinete P-018 con 19 % de batería), nunca "un usuario cualquiera".
+- Un escenario feliz y, al menos, uno de error por regla.
+- Referencia siempre la regla de la épica: `# Cubre R3 de #<épica>`.
+
+## Antes de dar por buena una historia
+- [ ] ¿Cada escenario se puede convertir en un test sin hacer preguntas?
+- [ ] ¿Aparece el código de error exacto del contrato?
+</codeblock>
+</div>
+
+<div class="tabpanel">
+<p><strong>Memoria compartida.</strong> Un fichero versionado que los agentes leen y actualizan. Pequeño y actual vale más que largo y obsoleto.</p>
+<codeblock file=".claude/memory/decisiones.md">
+# Decisiones del equipo <nombre>
+
+> Formato: fecha · decisión · motivo · quién. Los agentes LEEN este fichero al empezar
+> y lo ACTUALIZAN solo cuando una persona confirma la decisión.
+
+## Glosario
+- <término>: <definición del contrato, tal cual aparece en la épica>
+
+## Decisiones
+- 2026-12-01 · Modelo por defecto: sonnet; haiku para publicar issues · coste · <persona>
+- 2026-12-01 · Los agentes se pasan rutas, no contenido · contexto y coste · <persona>
+
+## Lecciones
+- <qué falló, qué cambiamos, qué agente lo absorbió>
+</codeblock>
+</div>
+</div>
+
+<h2 id="pedir-a-claude-code">Cómo pedirle a Claude Code que diseñe un agente</h2>
+<p>Claude Code puede escribir los ficheros de agente por vosotros, pero <strong>tiene que decidir cada persona qué es el agente</strong>. Si pedís «hazme un agente de calidad», recibiréis un agente genérico. La receta es: <em>pensad primero, pedid después, probad siempre</em>.</p>
+
+<ol class="steps">
+  <li><strong>Dibujad primero (en papel).</strong><p>Usad el canvas del taller: misión, entradas, salidas, herramientas, modelo, memoria, guardarraíles, modos de fallo, criterio de éxito y dueño. Sin esto, Claude rellenará los huecos con suposiciones.</p></li>
+  <li><strong>Dad contexto.</strong><p>Abrid <code>claude</code> en la raíz del repo y pedidle que lea <code>.claude/hints/</code>, la épica y vuestro <code>CLAUDE.md</code>. Cuanto más sepa de las reglas (rutas, presupuesto, seguridad), mejor encaja el agente.</p></li>
+  <li><strong>Pedid un plan antes que los ficheros.</strong><p>Activad el modo plan (<code>Shift+Tab</code>) o escribid «antes de crear nada, dime qué vas a hacer». Revisad el diseño y corregidlo. Cambiar un plan es gratis; cambiar diez ficheros, no.</p></li>
+  <li><strong>Crear el agente.</strong><p>Dos caminos válidos: <code>/agents</code> → <em>Create new agent</em> → nivel <em>Project</em> → <em>Generate with Claude</em>, o directamente pedirle que escriba el fichero en <code>.claude/agents/</code>. Dadle vuestro canvas completo, no una frase.</p></li>
+  <li><strong>Revisad el fichero generado.</strong><p>Mirad cuatro cosas: ¿la <code>description</code> dice cuándo usarlo? ¿<code>tools</code> es lo mínimo? ¿el <code>model</code> está justificado? ¿hay una sección de «qué NO hace» y de «qué hace si falla»?</p></li>
+  <li><strong>Probadlo con un caso real y pequeño.</strong><p>Lanzadlo con una historia verdadera, mirad qué ha hecho y cuánto ha costado. Un agente que no se ha probado no está terminado.</p></li>
+  <li><strong>Iterad con el fallo concreto.</strong><p>No digáis «mejóralo». Pegad lo que salió mal y lo que esperabais, y pedid que ajuste <em>el agente</em> (no el resultado).</p></li>
+  <li><strong>Commit y evidencia.</strong><p>Haced commit del fichero y anotadlo en <code>docs/evidencias/sistema-agentes.md</code> (rol, modelo, entradas, salidas, puertas). Es lo que mira el jurado.</p></li>
+</ol>
+
+<h3>La receta de un buen prompt</h3>
+<div class="cards">
+  <div class="card"><h3>1 · Contexto</h3><p>Qué es el proyecto, en qué fase del ciclo está este agente y qué agentes tiene antes y después.</p></div>
+  <div class="card"><h3>2 · Misión</h3><p>Una frase, y lo que <strong>no</strong> debe hacer.</p></div>
+  <div class="card"><h3>3 · Contrato</h3><p>Entradas (rutas) y salidas (fichero y formato exacto).</p></div>
+  <div class="card"><h3>4 · Límites</h3><p>Herramientas mínimas, modelo, topes de iteración y guardarraíles.</p></div>
+  <div class="card"><h3>5 · Fallos</h3><p>Qué hace si la entrada es ambigua o si algo falla.</p></div>
+  <div class="card"><h3>6 · Prueba</h3><p>Cómo sabremos que lo hizo bien: un caso de prueba concreto.</p></div>
+</div>
+
+<h3>Prompts para copiar y adaptar</h3>
+
+<promptblock title="1 · Del canvas al agente">
+Quiero crear un subagente de Claude Code para nuestro sistema. Antes de escribir ningún fichero, lee `.claude/hints/` y `CLAUDE.md`.
+
+CONTEXTO: somos el equipo <nombre>. Nuestro ciclo tiene estas fases: <requisitos → planificación → implementación → calidad → entrega>. Este agente actúa en la fase <X>, después de <agente anterior> y antes de <agente siguiente>.
+
+CANVAS DEL AGENTE:
+- Misión: <una frase>. Lo que NO hace: <...>
+- Entradas: <rutas de fichero, URLs o issues>
+- Salidas: <fichero exacto y formato>
+- Herramientas mínimas: <lista>
+- Modelo: <haiku/sonnet/opus> porque <motivo>
+- Memoria: <qué lee y qué actualiza>
+- Guardarraíles: <qué se aplica técnicamente (tools, permisos) y qué es solo instrucción>
+- Si algo falla o es ambiguo: <comportamiento>
+- Éxito: <cómo lo comprobamos>
+
+Primero propónme el contenido del fichero `.claude/agents/<nombre>.md` y señala cualquier decisión que hayas tenido que suponer. Espera mi aprobación antes de crearlo.
+</promptblock>
+
+<promptblock title="2 · Proponer el sistema completo antes de crear nada">
+Lee `.claude/hints/`, la épica #<n> y los ejemplos de `docs/`. Propón un sistema de entre 4 y 6 agentes para automatizar estas 5 fases: requisitos, planificación, implementación, calidad y seguridad, entrega.
+
+Quiero una tabla con: agente, misión, entradas, salidas, herramientas, modelo y por qué ese modelo. Indica también quién orquesta, dónde están las puertas humanas y qué NO vamos a automatizar.
+
+Después, dime qué agentes sobran o se podrían convertir en una skill, y cuánto crees que costará una historia completa. No crees ningún fichero todavía.
+</promptblock>
+
+<promptblock title="3 · Corregir un agente con el fallo concreto">
+El agente `.claude/agents/<nombre>.md` falló en este caso:
+
+ENTRADA: <ruta o resumen>
+LO QUE HIZO: <lo que ocurrió>
+LO QUE ESPERÁBAMOS: <lo que debía pasar>
+
+Diagnostica si el problema está en la descripción, las herramientas, el contrato de salida o la falta de reglas. Propón el cambio mínimo en el fichero del agente (no en el resultado) y explícame por qué evitará que se repita.
+</promptblock>
+
+<promptblock title="4 · Convertir una regla en guardarraíl técnico">
+Hoy nuestro agente `<nombre>` «no debería» <acción peligrosa o que debe aprobar una persona>, pero eso solo está escrito en su instrucción.
+
+Revisa qué herramientas y permisos tiene y propón cómo impedirlo técnicamente: quitando herramientas en `tools:`, separando el agente en dos o usando permisos. Respeta que `.claude/settings.json` común no se puede modificar; lo nuestro va en `.claude/settings.local.json`. Muéstrame el cambio antes de aplicarlo.
+</promptblock>
+
+<promptblock title="5 · Generar el CLAUDE.md">
+Lee todos los ficheros de .claude/hints/ y después ejecuta /init
+</promptblock>
+
+<h3>Prompt flojo frente a prompt bueno</h3>
+<div class="cards c2">
+  <div class="card bad"><h3>✕ Flojo</h3><p>«Hazme un agente que revise el código.»</p><p class="muted">No dice qué mira, con qué contrato, con qué herramientas ni cómo se prueba. Saldrá un agente genérico con todas las herramientas.</p></div>
+  <div class="card ok"><h3>✓ Bueno</h3><p>«Crea el subagente <code>revisor-independiente</code> en Sonnet, solo con Read, Grep, Glob y Bash. Recibe rutas de spec y diff, comprueba que cada criterio tiene un test, devuelve VEREDICTO/HALLAZGOS y no puede editar nada. Pruébalo con la historia US-3.»</p><p class="muted">Rol estrecho, contrato, límites técnicos y una prueba.</p></div>
+</div>
+
+<h2>Errores frecuentes</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Error</th><th>Por qué cuesta puntos</th><th>Cómo evitarlo</th></tr></thead>
+<tbody>
+<tr><td>Demasiados agentes (9–14)</td><td>Se queda el ciclo sin cerrar y sube el coste. Penaliza en A y E.</td><td>Empezad con 4–6 y añadid solo si un fallo lo exige.</td></tr>
+<tr><td>Agente «hace-todo» con todas las herramientas</td><td>Sin rol claro ni límites. Penaliza en A y C.</td><td>Una misión por agente y <code>tools:</code> mínimas.</td></tr>
+<tr><td>Pasar contenido pegado entre agentes</td><td>Gasta contexto y crédito en cada turno.</td><td>Pasad rutas de fichero; que cada agente lea lo que necesite.</td></tr>
+<tr><td>El agente que escribe el código también lo aprueba</td><td>Se autoaprueba: penaliza en C.</td><td>Revisor independiente sin permisos de edición.</td></tr>
+<tr><td>Puertas humanas «de palabra»</td><td>Procedimental: nivel 3 en C como mucho.</td><td>Quitad la herramienta que permitiría saltarse la puerta.</td></tr>
+<tr><td>Bucles sin tope</td><td>Quema el presupuesto antes del día 3.</td><td>Máximo 2–3 vueltas y luego parar y pedir ayuda.</td></tr>
+<tr><td>Descripción vaga</td><td>Claude no sabe cuándo delegar y el agente no se usa.</td><td>«Úsalo cuando…» y «No hace…».</td></tr>
+<tr><td>Nadie ha probado el agente</td><td>Falla en directo, en la demo.</td><td>Probadlo con una historia real al construirlo.</td></tr>
+</tbody></table></div>
+
+<h2>Checklist antes de dar un agente por bueno</h2>
+<ol class="steps">
+  <li><strong>¿Tiene una sola responsabilidad?</strong><p>Si necesitáis decir «y» dos veces, son dos agentes (o un agente y una skill).</p></li>
+  <li><strong>¿Podría ser una skill?</strong><p>Si solo es una receta o un formato, que lo sea; ahorra contexto y un agente.</p></li>
+  <li><strong>¿Recibe rutas, no contenido?</strong></li>
+  <li><strong>¿Nadie se aprueba a sí mismo?</strong><p>Quien produce no valida.</p></li>
+  <li><strong>¿Tiene límites técnicos?</strong><p><code>tools:</code> mínimas y topes de iteración.</p></li>
+  <li><strong>¿Sabe qué hacer cuando falla o hay ambigüedad?</strong></li>
+  <li><strong>¿Tiene un modelo justificado y una prueba con un caso real?</strong></li>
+  <li><strong>¿Tiene un dueño en el equipo y está en <code>docs/evidencias/sistema-agentes.md</code>?</strong></li>
+</ol>

@@ -1,0 +1,50 @@
+<!-- title: Agenda -->
+<!-- kicker: Día a día -->
+<!-- lead: Tres tardes de 16:00 a 20:00. El primer día aprendéis y diseñáis, el segundo construís y os adaptáis, y el tercero integráis, demostráis y convencéis. -->
+<!-- chips: <span class="chip line">1 dic · Fundamentos y diseño</span><span class="chip line">2 dic · Construir y adaptarse</span><span class="chip line">3 dic · Integrar y convencer</span> -->
+
+<div class="note"><svg class="icon"><use href="#i-clock"/></svg><div><p>Los horarios son <strong>firmes en los hitos</strong> (cambios de requisitos, congelación del código y pitches) y pueden moverse unos minutos en el resto. Cualquier cambio se avisará en sala y aquí.</p></div></div>
+
+<h2 id="pre-evento">Antes del evento · sesión online de setup <span class="chip pend">Fecha por confirmar</span></h2>
+<ol class="timeline">
+  <li><span class="t">Jueves 26 nov<br><span class="muted">17:00–18:00 (propuesta)</span></span><div class="b"><strong>Sesión online de setup</strong><span>Revisamos los prerrequisitos, ejecutamos <code>/setup</code> juntos hasta ver <strong>LISTO</strong>, resolvemos problemas de entorno y presentamos los equipos. Si algo falla en tu portátil, este es el momento de arreglarlo.</span></div></li>
+</ol>
+
+<div class="day-head" id="dia-1"><span class="d">1</span><div><div class="sub">Martes 1 de diciembre · 16:00–20:00</div><h2 style="margin:0">Día 1 · Fundamentos y diseño</h2></div></div>
+<p>Aprendéis los dos pilares (agentic engineering y SDD), diseñáis en papel vuestro sistema de agentes y dejáis lista la primera pieza en <code>main</code>.</p>
+<ol class="timeline">
+  <li><span class="t">16:00–16:20</span><div class="b"><strong>Bienvenida y misión</strong><span>Saludo institucional de la UPV (3 min) y presentación del reto, las reglas y la rúbrica. <strong>Os enviamos por correo el enlace para reclamar vuestro crédito de API</strong> (<a href="funcionamiento.html#credito-api">cómo se reclama</a>).</span></div></li>
+  <li><span class="t">16:20–17:00</span><div class="b"><strong>Agentic Engineering con Claude Code</strong><span>Subagentes, skills, comandos, hooks y permisos, con demo en directo.</span></div></li>
+  <li><span class="t">17:00–17:30</span><div class="b"><strong>SDD con OpenSpec</strong><span>Proponer, aplicar y archivar specs, con demo.</span></div></li>
+  <li class="brk"><span class="t">17:30–17:45</span><div class="b"><strong>Descanso</strong></div></li>
+  <li><span class="t">17:45–18:45</span><div class="b"><strong>Taller · Diseña tu sistema de agentes</strong><span>En papel y <strong>sin portátil</strong>: pizarra, pegatinas de arquitectura y un canvas por agente. Foto del resultado al repo.</span></div></li>
+  <li><span class="t">18:45–19:45</span><div class="b"><strong>Plan y setup</strong><span><code>openspec init</code>, <code>CLAUDE.md</code> y el primer agente funcionando. Objetivo: todo en <code>main</code>.</span></div></li>
+  <li><span class="t">19:45–20:00</span><div class="b"><strong>Checkpoint</strong><span>Un minuto por equipo: qué agentes tenéis y qué historia vais a cerrar mañana.</span></div></li>
+</ol>
+<div class="note"><svg class="icon"><use href="#i-list"/></svg><div><p>Las <strong>épicas base</strong> (E0–E4, y E5 como <em>stretch</em>) se publican en la <a href="epicas.html">wiki</a> al empezar el día. Empezad por <code>E0</code> (contexto).</p></div></div>
+
+<div class="day-head" id="dia-2"><span class="d">2</span><div><div class="sub">Miércoles 2 de diciembre · 16:00–20:00</div><h2 style="margin:0">Día 2 · Construir y adaptarse</h2></div></div>
+<p>Construís de verdad, y a mitad de tarde cambian los requisitos. Se evalúa lo bien que vuestro sistema <strong>absorbe el cambio sin rediseñarse</strong>.</p>
+<ol class="timeline">
+  <li><span class="t">16:00–16:15</span><div class="b"><strong>Kick-off del día</strong><span>Estado de cada equipo y objetivo: una historia completa de punta a punta.</span></div></li>
+  <li><span class="t">16:15–17:30</span><div class="b"><strong>Construcción</strong><span>Vuestro sistema produce historias, specs, código, tests y evidencias.</span></div></li>
+  <li class="brk"><span class="t">17:30–17:45</span><div class="b"><strong>Descanso</strong></div></li>
+  <li class="hot"><span class="t">17:45</span><div class="b"><span class="chip alert">Cambio de requisitos</span><strong>CR1 se publica en la wiki</strong><span>Un cambio que afecta a lo que ya tenéis. Entra por vuestro sistema: nuevo <em>change</em> OpenSpec, no un parche al código.</span></div></li>
+  <li><span class="t">17:45–18:45</span><div class="b"><strong>Construir y cambiar</strong><span>Seguís avanzando mientras absorbéis el cambio.</span></div></li>
+  <li class="hot"><span class="t">18:15</span><div class="b"><span class="chip alert">Cambio de requisitos</span><strong>CR2 se publica en la wiki</strong><span>Segundo cambio, con la construcción aún en marcha.</span></div></li>
+  <li><span class="t">18:45–19:30</span><div class="b"><strong>Revisión de stakeholders</strong><span>Dos salas, cuatro equipos por sala, <strong>10 minutos por equipo</strong>. <strong>No elimina a nadie</strong>: es feedback para salir con un «qué mantener, qué cambiar y qué enseñar sí o sí».</span></div></li>
+  <li><span class="t">19:30–20:00</span><div class="b"><strong>Replanificación y revisión de coste</strong><span>Stop / Start / Continue y repaso del presupuesto que os queda para el día 3.</span></div></li>
+</ol>
+
+<div class="day-head" id="dia-3"><span class="d">3</span><div><div class="sub">Jueves 3 de diciembre · 16:00–20:00</div><h2 style="margin:0">Día 3 · Integrar, demostrar, convencer</h2></div></div>
+<p>Cerráis, congeláis el código y lo contáis. <strong>Solo cuenta lo que esté en <code>main</code> a las 17:30.</strong></p>
+<ol class="timeline">
+  <li><span class="t">16:00–16:20</span><div class="b"><strong>Kick-off + Pitch con impacto</strong><span>Cómo contar vuestro trabajo en 5 minutos. Sorteo del orden de los pitches.</span></div></li>
+  <li><span class="t">16:20–17:30</span><div class="b"><strong>Refinamiento, integración y evidencias</strong><span>Dejad <code>main</code> en verde y rellenad <code>docs/evidencias/</code>.</span></div></li>
+  <li class="freeze"><span class="t">17:30</span><div class="b"><span class="chip freeze">Congelación del código</span><strong>Lo que esté en <code>main</code> es lo que se evalúa</strong><span>Después de esta hora no se puede subir nada que cuente.</span></div></li>
+  <li><span class="t">17:30–18:10</span><div class="b"><strong>Preparación del pitch</strong><span>Vosotros preparáis la demo y la presentación mientras los coaches auditan los repos.</span></div></li>
+  <li><span class="t">18:10–19:30</span><div class="b"><strong>Pitches</strong><span>8 equipos × 10 minutos: <strong>5 de pitch + 4 de preguntas del jurado + 1 de cambio</strong>.</span></div></li>
+  <li><span class="t">19:30–19:45</span><div class="b"><strong>Retro y encuesta</strong><span>Vosotros rellenáis la encuesta; el jurado delibera.</span></div></li>
+  <li><span class="t">19:45–20:00</span><div class="b"><strong>Premios, foto y cierre</strong></div></li>
+</ol>
+<div class="note"><svg class="icon"><use href="#i-trophy"/></svg><div><p>Cómo se puntúa cada cosa está en <a href="evaluacion.html">Evaluación</a>. Las plantillas del pitch y de las evidencias se explican en el kick-off del día 3.</p></div></div>

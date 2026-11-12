@@ -1,0 +1,64 @@
+<!-- title: La aplicación -->
+<!-- kicker: Requisitos -->
+<!-- lead: Qué vais a construir (con vuestro sistema de agentes): BiciCampus. Aquí está de qué va, lo que ya está fijado y cómo se publicarán los requisitos. -->
+<!-- chips: <span class="chip ok">Aplicación confirmada</span> -->
+
+<div class="note"><svg class="icon"><use href="#i-layers"/></svg><div><h3>BiciCampus · bicis y patinetes compartidos del campus de Vera</h3><p>El campus tiene <strong>60 bicis y 20 patinetes eléctricos en 8 estaciones</strong>. A las 8:30 el Ágora está vacío y a las 14:00 la Biblioteca no tiene ni un hueco libre. El Vicerrectorado de Campus (<em>stakeholder ficticio</em>) quiere una plataforma que gestione el <strong>préstamo con reglas claras</strong>, cobre lo justo, atienda las averías y diga al operario dónde tiene que ir.</p><p>El contexto completo, con los usuarios de demo y el glosario, estará en la épica <code>E0</code> de la <a href="epicas.html">wiki</a> el día 1. <strong>No necesitáis saber más para prepararos</strong>: el entorno, Claude Code y OpenSpec son los mismos.</p></div></div>
+
+<h2>La aplicación de un vistazo</h2>
+<div class="cards">
+  <div class="card"><svg class="icon"><use href="#i-users"/></svg><h3>Tres roles</h3><p><code>USUARIO</code> (comunidad UPV), <code>OPERARIO</code> (mantenimiento) y <code>GESTOR</code> (panel de flota). Sin login real: un selector de usuario de demo.</p></div>
+  <div class="card"><svg class="icon"><use href="#i-list"/></svg><h3>Reglas con números</h3><p>Batería mínima, docks libres, tarifas por tiempo, bonos, tope diario y bloqueos. Todo se puede comprobar con ejemplos concretos.</p></div>
+  <div class="card"><svg class="icon"><use href="#i-stop"/></svg><h3>Fuera de alcance</h3><p><strong>Mapa, GPS y tiempo real.</strong> Una lista de estaciones con sus cifras basta: no gastéis crédito en ello.</p></div>
+</div>
+
+<h2>Lo que ya está fijado</h2>
+<div class="cards">
+  <div class="card"><svg class="icon"><use href="#i-lock"/></svg><h3>Sin IA en el producto</h3><p>La aplicación no contiene IA. La IA es la herramienta con la que se construye.</p></div>
+  <div class="card"><svg class="icon"><use href="#i-layers"/></svg><h3>Un mismo reto para todos</h3><p>Los 8 equipos construyen la misma aplicación, para poder comparar sistemas y no productos.</p></div>
+  <div class="card"><svg class="icon"><use href="#i-flag"/></svg><h3>Pequeña a propósito</h3><p>Cuatro épicas base más una <em>stretch</em> y dos cambios de requisitos, en unas 6 horas netas de trabajo.</p></div>
+</div>
+
+<h2>Cómo se os presentarán los requisitos</h2>
+<p>Los requisitos llegan como <strong>épicas publicadas en esta wiki</strong> (sección <a href="epicas.html">Épicas</a>), que vuestros agentes <strong>descargan de internet</strong>. No hay tablero ni cuentas extra. No hay historias escritas: <strong>las escribe vuestro sistema</strong> (fase 1 del ciclo).</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Pieza</th><th>Qué es</th><th>Cuándo aparece</th></tr></thead>
+<tbody>
+<tr><td><code>E0</code> Contexto</td><td>La historia del stakeholder, roles de usuario, usuarios de demo, glosario y requisitos no funcionales. <strong>Léelo primero.</strong></td><td>Día 1, al empezar</td></tr>
+<tr><td><code>E1</code>–<code>E4</code></td><td>Las épicas base. El orden recomendado se indica en E0.</td><td>Día 1, al empezar</td></tr>
+<tr><td><code>E5</code></td><td>Épica <em>stretch</em>: solo si el resto va bien. Los coaches ayudan a recortar en el checkpoint del día 1.</td><td>Día 1, al empezar</td></tr>
+<tr><td><code>CR1</code></td><td>Primer <strong>cambio de requisitos</strong>. Modifica lo ya construido.</td><td>Día 2, 17:45</td></tr>
+<tr><td><code>CR2</code></td><td>Segundo cambio de requisitos, mientras aún estáis absorbiendo el primero.</td><td>Día 2, 18:15</td></tr>
+</tbody></table></div>
+<div class="note"><svg class="icon"><use href="#i-loop"/></svg><div><p>Los cambios de requisitos <strong>no se avisan antes</strong>. Si vuestro sistema es adaptable, entran por el flujo normal (nuevo <em>change</em> OpenSpec, tests actualizados) sin rediseñar ningún agente. Eso es justo lo que mide el criterio D.</p></div></div>
+
+<h2>Cómo es una épica</h2>
+<p>Todas las épicas siguen la misma estructura, así que podéis preparar vuestro sistema para leerlas:</p>
+<ul>
+  <li><strong>Objetivo</strong> y usuarios implicados.</li>
+  <li><strong>Reglas de negocio</strong> numeradas (R1, R2…), que los coaches pueden comprobar en vivo.</li>
+  <li><strong>Contrato de API y códigos de error</strong>: se usan tal cual, forman parte del criterio de funcionalidad.</li>
+  <li><strong>Fuera de alcance</strong>, para que no gastéis crédito en lo que no puntúa.</li>
+</ul>
+
+<h2>Requisitos técnicos <span class="chip ok">Confirmados</span></h2>
+<p>Esto es lo que se prevé para BiciCampus. Si algo cambia, se avisa aquí.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Aspecto</th><th>Previsión</th></tr></thead>
+<tbody>
+<tr><td>Stack</td><td>Node 22 + TypeScript + Express + SQLite + React/Vite + Vitest. Los comandos de arranque están en <code>.claude/hints/stack-y-estandares.md</code>.</td></tr>
+<tr><td>Arranque</td><td><code>npm install &amp;&amp; npm run dev</code>, sin Docker ni servicios externos.</td></tr>
+<tr><td>Datos</td><td>SQLite con datos semilla cargados al arrancar (<code>npm run seed</code>).</td></tr>
+<tr><td>API</td><td>REST y JSON. Los errores de negocio devuelven <code>409</code> o <code>422</code> con <code>{ code, message }</code>.</td></tr>
+<tr><td>Interfaz</td><td>En castellano, responsive y con un mínimo de accesibilidad (etiquetas y contraste).</td></tr>
+<tr><td>Autenticación</td><td><strong>Fuera de alcance.</strong> Un selector de «usuario de demo» basta: no puntúa y gasta presupuesto.</td></tr>
+<tr><td>Testabilidad</td><td>Todo lo que dependa del tiempo (reservas de 10 minutos, límites de uso, tarifas) debe poder simularse, para poder probarlo.</td></tr>
+</tbody></table></div>
+
+<h2>Cómo prepararse mientras tanto</h2>
+<ol class="steps">
+  <li><strong>Dejad el entorno listo.</strong><p>Completad los <a href="funcionamiento.html#antes-del-dia-1">prerrequisitos</a> y asistid a la sesión de setup.</p></li>
+  <li><strong>Leed las pistas del repo.</strong><p>Los ficheros de <code>.claude/hints/</code> no dependen de la aplicación.</p></li>
+  <li><strong>Revisad las plantillas de agentes.</strong><p>Practicad el formato en <a href="agentes.html">Agentes: plantillas y guía</a> para llegar al taller con ideas.</p></li>
+  <li><strong>Conoced a vuestro equipo.</strong><p>Hablad de quién se siente cómodo con qué: requisitos, tests, seguridad, pitch.</p></li>
+</ol>

@@ -1,0 +1,47 @@
+<!-- title: Normas -->
+<!-- kicker: Reglas del juego -->
+<!-- lead: Cinco reglas que no se negocian y el resto de normas prácticas para que todo el mundo juegue en igualdad de condiciones. -->
+
+<h2>Las cinco reglas básicas</h2>
+<ol class="steps">
+  <li><strong>El producto no lleva IA.</strong><p>La IA es vuestra herramienta de construcción, no una funcionalidad de la aplicación. Nada de llamadas a modelos desde el producto.</p></li>
+  <li><strong>Solo cuenta <code>main</code>, el día 3 a las 17:30.</strong><p>Lo que esté en otra rama, en vuestro portátil o en un PR sin fusionar no existe para el jurado. Cuando llegue la hora, se congela.</p></li>
+  <li><strong>No se debilita la línea base.</strong><p>No modifiquéis <code>.claude/settings.json</code>, los hooks ni los workflows de CI. Vuestros ajustes personales van en <code>.claude/settings.local.json</code>; las reglas de denegación del fichero común siempre ganan.</p></li>
+  <li><strong>Las claves de API son personales.</strong><p>No se comparten, no se pegan en ficheros ni se suben al repo. Si se filtra una, avisad a la organización de inmediato.</p></li>
+  <li><strong>Todas las personas diseñan al menos un agente.</strong><p>Una skill o un agente propio por persona, con commits relevantes. Nadie es dueño único del orquestador.</p></li>
+</ol>
+
+<h2>Sobre el trabajo en GitHub</h2>
+<ul>
+  <li>Las <strong>épicas</strong> las publica la organización en la <a href="epicas.html">wiki</a>. <strong>No las editéis.</strong> Las historias las crea vuestro sistema, como issues nuevos con label <code>historia</code>.</li>
+  <li><code>main</code> siempre en verde. Una rama por historia o <em>change</em> (<code>us-7-cancelar-reserva</code>) y PR a <code>main</code> con <code>Closes #&lt;historia&gt;</code>.</li>
+  <li>El CI tiene que estar en verde antes de fusionar. <code>git push</code> pide confirmación en Claude Code a propósito: es intencionado.</li>
+  <li>Los códigos de error y contratos que fije cada épica se usan <strong>tal cual</strong>.</li>
+</ul>
+
+<h2>Presupuesto y modelos</h2>
+<ul>
+  <li>Modelos permitidos: <code>haiku</code>, <code>sonnet</code> y <code>opus</code>. Sonnet por defecto; Opus solo para decisiones difíciles y <strong>justificado en <code>docs/evidencias/</code></strong>.</li>
+  <li>El crédito no se recarga. Por encima del 90&nbsp;% lanzar un subagente pide confirmación.</li>
+  <li>Los bucles de agentes tienen <strong>tope de iteraciones</strong> (2–3 vueltas). Un bucle sin tope es un agujero en el presupuesto.</li>
+  <li>Al final, volcad vuestro coste con <code>node .claude/hooks/budget.js report</code> a <code>docs/evidencias/</code>.</li>
+</ul>
+
+<h2>Seguridad y permisos</h2>
+<p>La configuración común del evento (<code>.claude/settings.json</code>) se commitea para que todo el equipo y todos vuestros subagentes tengan las mismas reglas.</p>
+<div class="cards c2">
+  <div class="card ok"><svg class="icon"><use href="#i-check"/></svg><h3>Se ejecuta sin preguntar</h3><p>Node y npm (<code>npm ci</code>, <code>npm test</code>, <code>npx vitest</code>…), consultas de OpenSpec, Git local, leer y crear issues, descargar páginas de la documentación del stack y de esta wiki con <code>WebFetch</code>, ver runs del CI y editar el código y <code>.claude/agents|skills|commands|memory</code>.</p></div>
+  <div class="card warn"><svg class="icon"><use href="#i-alert"/></svg><h3>Pide confirmación</h3><p><code>git push|pull|merge|rebase|reset</code>, <code>rm -r</code>, instalar paquetes concretos, <code>openspec init|update</code>, cerrar issues, crear o fusionar PR y <code>gh api</code>. Todo lo no listado también pregunta.</p></div>
+</div>
+<div class="note stop"><svg class="icon"><use href="#i-stop"/></svg><div><p><strong>Está prohibido:</strong> <code>sudo</code>, <code>ssh</code>, <code>wget</code>, <code>eval</code>; forzar el push o publicar en npm; instalar paquetes globales; borrar issues o repos; leer <code>.env*</code>, claves (<code>*.pem</code>, <code>*.key</code>), <code>~/.ssh</code>, <code>~/.aws</code> o la configuración de <code>gh</code>; y modificar la línea base. El modo <em>bypass permissions</em> está desactivado.</p></div></div>
+<div class="note"><svg class="icon"><use href="#i-shield"/></svg><div><p><strong>Bonus:</strong> aplicar seguridad <strong>a vuestro propio sistema de agentes</strong> (qué puede hacer cada agente, qué herramientas tiene y qué hooks lo limitan) suma en el criterio C. El equipo ganador de la edición anterior lo hizo.</p></div></div>
+
+<h2>Honestidad de las cifras</h2>
+<p>Las cifras que cuente vuestro pitch (historias cerradas, tests, coste, número de agentes) <strong>tienen que coincidir con las del repo</strong>. En la edición anterior varios equipos perdieron puntos por números distintos entre el pitch, el README y el código. Los coaches auditan el repo antes de los pitches.</p>
+
+<h2>Convivencia</h2>
+<ul>
+  <li>Es un evento de aprendizaje: <strong>preguntad</strong>, ayudad a otros equipos si os lo piden y compartid lo que aprendáis.</li>
+  <li>Cuidad el aula, el material y el trabajo de las demás personas. Un trato respetuoso es condición para participar.</li>
+  <li>Durante el evento se tomarán fotos para la comunicación de las entidades organizadoras. Daréis vuestro consentimiento de imagen en la inscripción.</li>
+</ul>
