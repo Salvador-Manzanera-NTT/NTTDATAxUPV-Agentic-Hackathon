@@ -6,7 +6,7 @@ Sin dependencias: solo Python 3 (biblioteca estándar) para construir.
 
 ## Publicar (una sola vez)
 
-El repo es `Salvador-Manzanera-NTT/NTTDATAxUPV-Agentic-Hackthon` y lo crea `06_Skill_Publicar_Epicas/crear-repos-github.sh` (sube esta carpeta, que **es** la raíz del repo, activa Pages con origen **GitHub Actions** y lanza el workflow). A mano sería: crear el repo, subir esta carpeta a `main`, **Settings → Pages → Source: GitHub Actions** y hacer un push a `main`. El workflow `Publicar wiki en GitHub Pages` construye y publica; la URL aparece en el job `deploy` y en Settings → Pages (`https://<org>.github.io/<repo>/`).
+El repo es `Salvador-Manzanera-NTT/NTTDATAxUPV-Agentic-Hackathon` y lo crea `06_Skill_Publicar_Epicas/crear-repos-github.sh` (sube esta carpeta, que **es** la raíz del repo, activa Pages con origen **GitHub Actions** y lanza el workflow). A mano sería: crear el repo, subir esta carpeta a `main`, **Settings → Pages → Source: GitHub Actions** y hacer un push a `main`. El workflow `Publicar wiki en GitHub Pages` construye y publica; la URL aparece en el job `deploy` y en Settings → Pages (`https://<org>.github.io/<repo>/`).
 
 A partir de ahí, **cada push a `main` republica la wiki**. Los pull requests solo validan que compila y que no hay enlaces rotos.
 
